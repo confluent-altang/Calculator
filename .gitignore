@@ -1,0 +1,10 @@
+/.dotfiles.update
+
+# Intellij litter
+*.iml
+.idea
+
+# MacOS 
+.DS_Store
+
+target
