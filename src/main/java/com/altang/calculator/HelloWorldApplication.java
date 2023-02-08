@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.confluent.rest.examples.helloworld;
+package com.altang.calculator;
 
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceCollection;

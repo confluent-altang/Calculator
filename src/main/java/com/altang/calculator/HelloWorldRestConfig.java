@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.confluent.rest.examples.helloworld;
+package com.altang.calculator;
 
 import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.config.ConfigDef.Importance;

@@ -10,4 +10,4 @@ clean:
 
 .PHONY: run
 run: build
-	java -cp target/calculator-1.0-SNAPSHOT.jar io.confluent.App
+	java -cp target/calculator-1.0-SNAPSHOT.jar com.altang.calculator.HelloWorldApplication

@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.confluent.rest.examples;
+
+package com.altang.calculator;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +22,6 @@ import javax.ws.rs.core.Response;
 
 import io.confluent.rest.RestConfigException;
 import io.confluent.rest.EmbeddedServerTestHarness;
-import io.confluent.rest.examples.helloworld.HelloWorldApplication;
-import io.confluent.rest.examples.helloworld.HelloWorldRestConfig;
-import io.confluent.rest.examples.helloworld.HelloWorldResource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
