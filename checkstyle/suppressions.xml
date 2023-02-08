@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+
+    <!-- Some of the LdapTest Server files are Apache 2.0 Lic -->
+    <suppress
+            checks="(RegexpHeader)"
+            files="(InMemoryDirectoryServiceFactory|InMemorySchemaPartition|LdapServer|MDSLoggingFilter).java"
+    />
+    <suppress
+            checks="(BooleanExpressionComplexity)"
+            files="().java"
+    />
+
+    <suppress
+            checks="(CyclomaticComplexity)"
+            files="().java"
+    />
+
+    <suppress
+            checks="(ClassDataAbstractionCoupling)"
+            files="(RbacApiApplication|MdsLoginService|InMemoryDirectoryServiceFactory).java"
+    />
+
+    <suppress
+            checks="(ClassFanOutComplexity)"
+            files="().java"
+    />
+
+    <suppress
+            checks="(JavaNCSS)"
+            files="().java"
+    />
+
+    <suppress
+            checks="(NPathComplexity)"
+            files="().java"
+    />
+    <suppress
+            checks="(MethodLength)"
+            files="().java"
+    />
+    <suppress
+            checks="(AbbreviationAsWordInName)"
+            files="().java"
+    />
+
+    <suppress
+            checks="(ClassDataAbstractionCoupling)"
+            files="().java"
+    />
+
+    <suppress
+            checks="(ParameterNumber)"
+            files="(UpdatedTrustRecord).java"
+    />
+
+    <suppress
+            checks=".*"
+            files="io[\\/]confluent[\\/]security[\\/]trustservice[\\/]utils[\\/]mdsv2alpha1[\\/]"
+    />
+
+    <suppress
+            checks="(ParameterNumberCheck)"
+            files="(V2CloudRbacRoleBindingResource).java"
+    />
+</suppressions>
