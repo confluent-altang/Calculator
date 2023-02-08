@@ -30,7 +30,7 @@ import io.confluent.rest.RestConfig;
  * indicate what port the server should listen on), but all of which have reasonable default
  * implementations.
  */
-public class HelloWorldRestConfig extends RestConfig {
+public class CalculatorRestConfig extends RestConfig {
   private static ConfigDef config;
 
   public static final String GREETING_CONFIG = "greeting";
@@ -46,11 +46,11 @@ public class HelloWorldRestConfig extends RestConfig {
                 GREETING_CONFIG_DOC);
   }
 
-  public HelloWorldRestConfig() {
+  public CalculatorRestConfig() {
     super(config);
   }
 
-  public HelloWorldRestConfig(Map<?, ?> props) {
+  public CalculatorRestConfig(Map<?, ?> props) {
     super(config, props);
   }
 }

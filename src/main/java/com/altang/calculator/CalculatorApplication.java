@@ -41,16 +41,16 @@ import io.confluent.rest.RestConfigException;
  * echoed back in the response, and the driver program optionally loads this setting from a command
  * line argument.
  */
-public class HelloWorldApplication extends Application<HelloWorldRestConfig> {
-  private static final Logger log = LoggerFactory.getLogger(HelloWorldApplication.class);
+public class CalculatorApplication extends Application<CalculatorRestConfig> {
+  private static final Logger log = LoggerFactory.getLogger(CalculatorApplication.class);
 
-  public HelloWorldApplication(HelloWorldRestConfig config) {
+  public CalculatorApplication(CalculatorRestConfig config) {
     super(config);
   }
 
   @Override
-  public void setupResources(Configurable<?> config, HelloWorldRestConfig appConfig) {
-    config.register(new HelloWorldResource(appConfig));
+  public void setupResources(Configurable<?> config, CalculatorRestConfig appConfig) {
+    config.register(new CalculatorResource(appConfig));
     config.property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static/.*|.*\\.html|)");
   }
 
@@ -76,10 +76,10 @@ public class HelloWorldApplication extends Application<HelloWorldRestConfig> {
       //    io.confluent.rest.examples.helloworld.HelloWorldApplication 'Goodbye, %s'
       TreeMap<String,String> settings = new TreeMap<>();
       if (args.length > 0) {
-        settings.put(HelloWorldRestConfig.GREETING_CONFIG, args[0]);
+        settings.put(CalculatorRestConfig.GREETING_CONFIG, args[0]);
       }
-      HelloWorldRestConfig config = new HelloWorldRestConfig(settings);
-      HelloWorldApplication app = new HelloWorldApplication(config);
+      CalculatorRestConfig config = new CalculatorRestConfig(settings);
+      CalculatorApplication app = new CalculatorApplication(config);
       app.start();
       log.info("Server started, listening for requests...");
       app.join();
@@ -90,5 +90,4 @@ public class HelloWorldApplication extends Application<HelloWorldRestConfig> {
       log.error("Server died unexpectedly: " + e.toString());
     }
   }
-
 }

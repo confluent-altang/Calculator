@@ -31,14 +31,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * EmbeddedServerTestHarness does most of the heavy lifting so you only need to issue requests and
  * check responses.
  */
-public class HelloWorldResourceTest extends EmbeddedServerTestHarness<HelloWorldRestConfig, HelloWorldApplication> {
+public class CalculatorResourceTest extends EmbeddedServerTestHarness<CalculatorRestConfig, CalculatorApplication> {
   private final static String mediatype = "application/vnd.hello.v1+json";
 
-  public HelloWorldResourceTest() throws RestConfigException {
+  public CalculatorResourceTest() throws RestConfigException {
     // We need to specify which resources we want available, i.e. the ones we need to test. If we need
     // access to the server Configuration, as HelloWorldResource does, a default config is available
     // in the 'config' field.
-    addResource(new HelloWorldResource(config));
+    addResource(new CalculatorResource(config));
   }
 
   @Test
@@ -50,7 +50,7 @@ public class HelloWorldResourceTest extends EmbeddedServerTestHarness<HelloWorld
     assertEquals(mediatype, response.getMediaType().toString());
 
     // We should also be able to parse it as the expected output format
-    final HelloWorldResource.HelloResponse message = response.readEntity(HelloWorldResource.HelloResponse.class);
+    final CalculatorResource.HelloResponse message = response.readEntity(CalculatorResource.HelloResponse.class);
     // And it should contain the expected message
     assertEquals("Hello, World!", message.getMessage());
   }

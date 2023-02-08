@@ -28,10 +28,10 @@ import io.confluent.rest.annotations.PerformanceMetric;
 
 @Path("/hello")
 @Produces("application/vnd.hello.v1+json")
-public class HelloWorldResource {
-  HelloWorldRestConfig config;
+public class CalculatorResource {
+  CalculatorRestConfig config;
 
-  public HelloWorldResource(HelloWorldRestConfig config) {
+  public CalculatorResource(CalculatorRestConfig config) {
     this.config = config;
   }
 
@@ -67,7 +67,7 @@ public class HelloWorldResource {
     // curl http://localhost:8080/hello?name=Bob
     //   -> {"message":"Hello, Bob!"}
     return new HelloResponse(
-        String.format(config.getString(HelloWorldRestConfig.GREETING_CONFIG),
+        String.format(config.getString(CalculatorRestConfig.GREETING_CONFIG),
                       (name == null ? "World" : name)));
   }
 }
