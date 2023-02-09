@@ -30,8 +30,17 @@ public abstract class OperationResource {
         this.config = config;
     }
 
-    public final OperationResponse runOperation(@QueryParam("int1") final int int1, @QueryParam("int2") final int int2) {
-        String result = calculateResult(int1, int2);
+    public final OperationResponse runOperation(final String int1, final String int2) {
+        int validatedInt1;
+        int validatedInt2;
+        try {
+            validatedInt1 = Integer.parseInt(int1);
+            validatedInt2 = Integer.parseInt(int2);
+        } catch (NumberFormatException e) {
+            auditResource.logOperation(getOperationName(), int1, int2, "ARGUMENT");
+            return new OperationResponse("ARGUMENT");
+        }
+        String result = calculateResult(validatedInt1, validatedInt2);
         auditResource.logOperation(getOperationName(), int1, int2, result);
         return new OperationResponse(result);
     }

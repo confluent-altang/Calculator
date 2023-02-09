@@ -17,5 +17,5 @@
 package com.altang.calculator.operations;
 
 public interface AuditResourceInterface {
-    void logOperation(final String operation, final int int1, final int int2, final String result);
+    void logOperation(final String operation, final String int1, final String int2, final String result);
 }

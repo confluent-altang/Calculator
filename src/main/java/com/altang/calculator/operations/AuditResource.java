@@ -42,7 +42,7 @@ public class AuditResource implements AuditResourceInterface {
         return new AuditResponse(log);
     }
 
-    public void logOperation(final String operation, final int int1, final int int2, final String result) {
-        log += String.format("%s,%d,%d,%s\n", operation, int1, int2, result);
+    public void logOperation(final String operation, final String int1, final String int2, final String result) {
+        log += String.format("%s,%s,%s,%s\n", operation, int1, int2, result);
     }
 }

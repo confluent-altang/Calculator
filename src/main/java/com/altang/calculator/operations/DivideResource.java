@@ -35,11 +35,14 @@ public class DivideResource extends OperationResource {
 
   @GET
   @PerformanceMetric("divide-integers")
-  public OperationResponse add(@QueryParam("int1") int int1, @QueryParam("int2") int int2) {
+  public OperationResponse add(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
     return runOperation(int1, int2);
   }
 
   protected final String calculateResult(final int int1, final int int2) {
+    if (int2 == 0) {
+      return "DIVIDE BY 0";
+    }
     return Integer.toString(int1/int2);
   }
 

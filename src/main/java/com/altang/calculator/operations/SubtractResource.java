@@ -35,12 +35,16 @@ public class SubtractResource extends OperationResource {
 
   @GET
   @PerformanceMetric("subtract-integers")
-  public OperationResponse add(@QueryParam("int1") int int1, @QueryParam("int2") int int2) {
+  public OperationResponse add(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
     return runOperation(int1, int2);
   }
 
   protected final String calculateResult(final int int1, final int int2) {
-    return Integer.toString(int1-int2);
+    long result = (long)int1 - (long)int2;
+    if (result < Integer.MIN_VALUE) {
+      return "OVERFLOW";
+    }
+    return Integer.toString((int)result);
   }
 
   protected final String getOperationName() {
