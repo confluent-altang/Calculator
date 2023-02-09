@@ -16,6 +16,7 @@
 
 package com.altang.calculator;
 
+import com.altang.calculator.operations.*;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -50,15 +51,18 @@ public class CalculatorApplication extends Application<CalculatorRestConfig> {
 
   @Override
   public void setupResources(Configurable<?> config, CalculatorRestConfig appConfig) {
-    config.register(new CalculatorResource(appConfig));
+    AuditResource auditResource = new AuditResource(appConfig);
+    config.register(auditResource);
+    config.register(new AddResource(auditResource, appConfig));
+    config.register(new SubtractResource(auditResource, appConfig));
+    config.register(new MultiplyResource(auditResource, appConfig));
+    config.register(new DivideResource(auditResource, appConfig));
     config.property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static/.*|.*\\.html|)");
   }
 
   @Override
   public Map<String, String> getMetricsTags() {
     Map<String, String> tags = new LinkedHashMap<>();
-    // In a real app, you might have or generate a unique ID for this instance and add other
-    // tags like data center, app version, etc.
     tags.put("instance-id", "1");
     return tags;
   }
@@ -75,9 +79,6 @@ public class CalculatorApplication extends Application<CalculatorRestConfig> {
       // java -jar rest-utils-examples.jar \
       //    io.confluent.rest.examples.helloworld.HelloWorldApplication 'Goodbye, %s'
       TreeMap<String,String> settings = new TreeMap<>();
-      if (args.length > 0) {
-        settings.put(CalculatorRestConfig.GREETING_CONFIG, args[0]);
-      }
       CalculatorRestConfig config = new CalculatorRestConfig(settings);
       CalculatorApplication app = new CalculatorApplication(config);
       app.start();

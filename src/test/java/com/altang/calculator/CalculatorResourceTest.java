@@ -16,6 +16,8 @@
 
 package com.altang.calculator;
 
+import com.altang.calculator.operations.*;
+import com.altang.calculator.responses.OperationResponse;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
@@ -32,26 +34,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * check responses.
  */
 public class CalculatorResourceTest extends EmbeddedServerTestHarness<CalculatorRestConfig, CalculatorApplication> {
-  private final static String mediatype = "application/vnd.hello.v1+json";
+  private final static String addMediaType = "application/vnd.add.v1+json";
+  private final static String subtractMediaType = "application/vnd.subtract.v1+json";
+  private final static String multiplyMediaType = "application/vnd.multiply.v1+json";
+  private final static String divideMediaType = "application/vnd.divide.v1+json";
 
   public CalculatorResourceTest() throws RestConfigException {
-    // We need to specify which resources we want available, i.e. the ones we need to test. If we need
-    // access to the server Configuration, as HelloWorldResource does, a default config is available
-    // in the 'config' field.
-    addResource(new CalculatorResource(config));
+    // TODO: mock out the AuditResource
+    AuditResourceInterface auditResource = new AuditResource(config);
+    addResource(new AddResource(auditResource, config));
+    addResource(new SubtractResource(auditResource, config));
+    addResource(new MultiplyResource(auditResource, config));
+    addResource(new DivideResource(auditResource, config));
   }
 
   @Test
-  public void testHello() {
-    String acceptHeader = mediatype;
-    Response response = request("/hello", acceptHeader).get();
+  public void testAdd() {
+    Response response = request("/add", addMediaType).get();
     // The response should indicate success and have the expected content type
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-    assertEquals(mediatype, response.getMediaType().toString());
+    assertEquals(addMediaType, response.getMediaType().toString());
 
     // We should also be able to parse it as the expected output format
-    final CalculatorResource.HelloResponse message = response.readEntity(CalculatorResource.HelloResponse.class);
+    final OperationResponse message = response.readEntity(OperationResponse.class);
     // And it should contain the expected message
-    assertEquals("Hello, World!", message.getMessage());
+    assertEquals("0", message.getMessage());
   }
 }

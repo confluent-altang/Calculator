@@ -17,8 +17,6 @@
 package com.altang.calculator;
 
 import org.apache.kafka.common.config.ConfigDef;
-import org.apache.kafka.common.config.ConfigDef.Importance;
-import org.apache.kafka.common.config.ConfigDef.Type;
 
 import java.util.Map;
 
@@ -31,23 +29,10 @@ import io.confluent.rest.RestConfig;
  * implementations.
  */
 public class CalculatorRestConfig extends RestConfig {
-  private static ConfigDef config;
-
-  public static final String GREETING_CONFIG = "greeting";
-  private static final String GREETING_CONFIG_DOC = "Greeting template for responses.";
-  private static final String GREETING_CONFIG_DEFAULT = "Hello, %s!";
+  private static final ConfigDef config;
 
   static {
-    config = baseConfigDef()
-        .define(GREETING_CONFIG,
-                Type.STRING,
-                GREETING_CONFIG_DEFAULT,
-                Importance.HIGH,
-                GREETING_CONFIG_DOC);
-  }
-
-  public CalculatorRestConfig() {
-    super(config);
+    config = baseConfigDef();
   }
 
   public CalculatorRestConfig(Map<?, ?> props) {
