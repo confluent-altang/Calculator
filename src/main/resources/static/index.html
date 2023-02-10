@@ -1,27 +1,194 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>TI-42</title>
+</head>
+<style>
+    .outer {
+        display: table;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+    .middle {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .inner {
+        margin-left: auto;
+        margin-right: auto;
+        width: 400px;
+    }
+    .canvas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .calculator {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+        min-width: 400px;
+        border-style: double;
+    }
+    .calculator-display {
+        display: flex;
+        flex-grow: 1;
+        width: 98%;
+        text-align: right;
+        font-family: "Courier New";
+        font-weight: bold;
+        font-size: 50px;
+    }
+    .calculator-row {
+        display: flex;
+        flex-grow: 1;
+        width: 100%;
+        justify-content: center;
+        align-items: stretch;
+    }
+    .calculator-button {
+        display: flex;
+        flex-grow: 1;
+        width: 0px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 40px;
+    }
+</style>
+<script>
+const Operations = {
+    None: "NOOP",
+    Add: "ADD",
+    Subtract: "SUB",
+    Multiply: "MUL",
+    Divide: "DIV"
+}
+let input = false;
+let queuedValue = 0;
+let currentOperation = Operations.None;
+
+function insertNumber(number) {
+    if (input) {
+        const display = document.getElementById('display');
+        display.value = display.value+number;
+    } else {
+        if (number != "0") {
+            input = true;
+            const display = document.getElementById('display');
+            display.value = number;
+        }
+    }
+}
+
+function allClear() {
+    input = false;
+    queuedValue = 0;
+    currentOperation = Operations.None;
+    const display = document.getElementById('display');
+    display.value = "0";
+}
+
+function queueOperation(operation) {
+    const display = document.getElementById('display');
+    if (currentOperation === Operations.None) {
+        queuedValue = display.value;
+        currentOperation = getOperationFromString(operation);
+        input = false;
+    } else {
+
+    }
+}
+
+function getOperationFromString(operation) {
+    switch (operation) {
+        case 'ADD':
+            return Operations.Add;
+        case 'SUB':
+            return Operations.Subtract;
+        case 'MUL':
+            return Operations.Multiply;
+        case 'DIV':
+            return Operations.Divide;
+    }
+}
+
+function calculateOperation() {
+    const display = document.getElementById('display');
+    var result = 0;
+    switch (currentOperation) {
+        case Operations.None:
+            result = display.value;
+            break;
+        case Operations.Add:
+            break;
+        case Operations.Subtract:
+            break;
+        case Operations.Multiply:
+            break;
+        case Operations.Divide:
+            break;
+    }
+    input = false;
+    currentOperation = Operations.None;
+    display.value = result;
+}
+</script>
+<div class="outer">
+    <div class="middle">
+        <div class="inner">
+            <div class="calculator">
+                <input id="display" class="calculator-display" type="text" readonly="readonly" value="0"/>
+                <div class="calculator-row">
+                    <button class="calculator-button" onclick="queueOperation('DIV')">÷</button>
+                    <button class="calculator-button" onclick="insertNumber(7)">7</button>
+                    <button class="calculator-button" onclick="insertNumber(8)">8</button>
+                    <button class="calculator-button" onclick="insertNumber(9)">9</button>
+                </div>
+                <div class="calculator-row">
+                    <button class="calculator-button" onclick="queueOperation('MUL')">×</button>
+                    <button class="calculator-button" onclick="insertNumber(4)">4</button>
+                    <button class="calculator-button" onclick="insertNumber(5)">5</button>
+                    <button class="calculator-button" onclick="insertNumber(6)">6</button>
+                </div>
+                <div class="calculator-row">
+                    <button class="calculator-button" onclick="queueOperation('SUB')">-</button>
+                    <button class="calculator-button" onclick="insertNumber(1)">1</button>
+                    <button class="calculator-button" onclick="insertNumber(2)">2</button>
+                    <button class="calculator-button" onclick="insertNumber(3)">3</button>
+                </div>
+                <div class="calculator-row">
+                    <button class="calculator-button" onclick="queueOperation('ADD')">+</button>
+                    <button class="calculator-button" onclick="insertNumber(0)">0</button>
+                    <button class="calculator-button" onclick="allClear()">AC</button>
+                    <button class="calculator-button" onclick="calculateOperation()">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form action="/add" method="get">
-    Add:
-    <input name="int1" type="text" value="0"/>
-    <input name="int2" type="text" value="0"/>
-    <input type="submit"/>
+    Add: <input name="int1" type="text" value="0"/> <input name="int2" type="text" value="0"/> <input type="submit"/>
 </form>
 <form action="/subtract" method="get">
-    Subtract:
-    <input name="int1" type="text" value="0"/>
-    <input name="int2" type="text" value="0"/>
-    <input type="submit"/>
+    Subtract: <input name="int1" type="text" value="0"/> <input name="int2" type="text" value="0"/> <input
+        type="submit"/>
 </form>
 <form action="/multiply" method="get">
-    Multiply:
-    <input name="int1" type="text" value="0"/>
-    <input name="int2" type="text" value="0"/>
-    <input type="submit"/>
+    Multiply: <input name="int1" type="text" value="0"/> <input name="int2" type="text" value="0"/> <input
+        type="submit"/>
 </form>
 <form action="/divide" method="get">
-    Divide:
-    <input name="int1" type="text" value="0"/>
-    <input name="int2" type="text" value="0"/>
-    <input type="submit"/>
+    Divide: <input name="int1" type="text" value="0"/> <input name="int2" type="text" value="0"/> <input type="submit"/>
 </form>
 <form action="/audit" method="get">
     <input type="submit" value="AUDIT"/>

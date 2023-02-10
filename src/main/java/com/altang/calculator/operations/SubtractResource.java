@@ -26,7 +26,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 @Path("/subtract")
-@Produces("application/vnd.add.v1+json")
+@Produces("application/vnd.subtract.v1+json")
 public class SubtractResource extends OperationResource {
 
   public SubtractResource(final AuditResourceInterface auditResource, final CalculatorRestConfig config) {

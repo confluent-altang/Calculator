@@ -19,8 +19,6 @@ package com.altang.calculator.operations;
 import com.altang.calculator.CalculatorRestConfig;
 import com.altang.calculator.responses.OperationResponse;
 
-import javax.ws.rs.QueryParam;
-
 public abstract class OperationResource {
     protected final AuditResourceInterface auditResource;
     protected final CalculatorRestConfig config;
