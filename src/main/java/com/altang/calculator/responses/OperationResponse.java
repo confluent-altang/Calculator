@@ -16,6 +16,7 @@
 
 package com.altang.calculator.responses;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
@@ -24,11 +25,11 @@ public class OperationResponse {
     @NotEmpty
     private final String result;
 
-    public OperationResponse(final String result) {
+    @JsonCreator
+    public OperationResponse(@JsonProperty("message") final String result) {
         this.result = result;
     }
 
-    @JsonProperty
     public String getMessage() {
         return result;
     }

@@ -2,12 +2,12 @@
 
 .PHONY: build
 build:
-	mvn package
+	mvn clean install
 
 .PHONY: clean
 clean:
-	git clean -f
+	mvn clean
 
 .PHONY: run
 run: build
-	java -cp target/calculator-1.0-SNAPSHOT.jar com.altang.calculator.HelloWorldApplication
+	mvn exec:java

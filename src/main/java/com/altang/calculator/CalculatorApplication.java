@@ -16,7 +16,11 @@
 
 package com.altang.calculator;
 
-import com.altang.calculator.operations.*;
+import com.altang.calculator.operations.AddResource;
+import com.altang.calculator.operations.AuditResource;
+import com.altang.calculator.operations.DivideResource;
+import com.altang.calculator.operations.MultiplyResource;
+import com.altang.calculator.operations.SubtractResource;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -43,48 +47,48 @@ import io.confluent.rest.RestConfigException;
  * line argument.
  */
 public class CalculatorApplication extends Application<CalculatorRestConfig> {
-  private static final Logger log = LoggerFactory.getLogger(CalculatorApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(CalculatorApplication.class);
 
-  public CalculatorApplication(CalculatorRestConfig config) {
-    super(config);
-  }
-
-  @Override
-  public void setupResources(Configurable<?> config, CalculatorRestConfig appConfig) {
-    AuditResource auditResource = new AuditResource(appConfig);
-    config.register(auditResource);
-    config.register(new AddResource(auditResource, appConfig));
-    config.register(new SubtractResource(auditResource, appConfig));
-    config.register(new MultiplyResource(auditResource, appConfig));
-    config.register(new DivideResource(auditResource, appConfig));
-    config.property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static/.*|.*\\.html|)");
-  }
-
-  @Override
-  public Map<String, String> getMetricsTags() {
-    Map<String, String> tags = new LinkedHashMap<>();
-    tags.put("instance-id", "1");
-    return tags;
-  }
-
-  @Override
-  protected ResourceCollection getStaticResources() {
-    return new ResourceCollection(Resource.newClassPathResource("static"));
-  }
-
-  public static void main(String[] args) {
-    try {
-      TreeMap<String,String> settings = new TreeMap<>();
-      CalculatorRestConfig config = new CalculatorRestConfig(settings);
-      CalculatorApplication app = new CalculatorApplication(config);
-      app.start();
-      log.info("Server started, listening for requests...");
-      app.join();
-    } catch (RestConfigException e) {
-      log.error("Server configuration failed: " + e.getMessage());
-      System.exit(1);
-    } catch (Exception e) {
-      log.error("Server died unexpectedly: " + e);
+    public CalculatorApplication(CalculatorRestConfig config) {
+        super(config);
     }
-  }
+
+    @Override
+    public void setupResources(Configurable<?> config, CalculatorRestConfig appConfig) {
+        AuditResource auditResource = new AuditResource(appConfig);
+        config.register(auditResource);
+        config.register(new AddResource(auditResource, appConfig));
+        config.register(new SubtractResource(auditResource, appConfig));
+        config.register(new MultiplyResource(auditResource, appConfig));
+        config.register(new DivideResource(auditResource, appConfig));
+        config.property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static/.*|.*\\.html|)");
+    }
+
+    @Override
+    public Map<String, String> getMetricsTags() {
+        Map<String, String> tags = new LinkedHashMap<>();
+        tags.put("instance-id", "1");
+        return tags;
+    }
+
+    @Override
+    protected ResourceCollection getStaticResources() {
+        return new ResourceCollection(Resource.newClassPathResource("static"));
+    }
+
+    public static void main(String[] args) {
+        try {
+            TreeMap<String, String> settings = new TreeMap<>();
+            CalculatorRestConfig config = new CalculatorRestConfig(settings);
+            CalculatorApplication app = new CalculatorApplication(config);
+            app.start();
+            log.info("Server started, listening for requests...");
+            app.join();
+        } catch (RestConfigException e) {
+            log.error("Server configuration failed: " + e.getMessage());
+            System.exit(1);
+        } catch (Exception e) {
+            log.error("Server died unexpectedly: " + e);
+        }
+    }
 }

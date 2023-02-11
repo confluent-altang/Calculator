@@ -29,13 +29,18 @@ import io.confluent.rest.RestConfig;
  * implementations.
  */
 public class CalculatorRestConfig extends RestConfig {
-  private static final ConfigDef config;
+    private static final ConfigDef config;
 
-  static {
-    config = baseConfigDef();
-  }
+    static {
+        config = baseConfigDef();
+    }
 
-  public CalculatorRestConfig(Map<?, ?> props) {
-    super(config, props);
-  }
+    // needed for tests
+    public CalculatorRestConfig() {
+        super(config);
+    }
+
+    public CalculatorRestConfig(Map<?, ?> props) {
+        super(config, props);
+    }
 }
