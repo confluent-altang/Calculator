@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package com.altang.calculator.operations;
+package com.altang.calculator.client;
 
 import com.altang.calculator.CalculatorRestConfig;
+import com.altang.calculator.logic.CalculatorBrainInterface;
+import com.altang.calculator.models.OperationModel;
+import com.altang.calculator.models.OperationResult;
+import com.altang.calculator.models.OperationType;
 import com.altang.calculator.responses.OperationResponse;
 import io.confluent.rest.annotations.PerformanceMetric;
 
@@ -27,26 +31,19 @@ import javax.ws.rs.QueryParam;
 
 @Path("/divide")
 @Produces("application/vnd.divide.v1+json")
-public class DivideResource extends OperationResource {
+public class DivideResource {
+    private final CalculatorRestConfig config;
+    private final CalculatorBrainInterface brain;
 
-  public DivideResource(final AuditResourceInterface auditResource, final CalculatorRestConfig config) {
-    super(auditResource, config);
-  }
-
-  @GET
-  @PerformanceMetric("divide-integers")
-  public OperationResponse add(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
-    return runOperation(int1, int2);
-  }
-
-  protected final String calculateResult(final int int1, final int int2) {
-    if (int2 == 0) {
-      return "DIVIDE BY 0";
+    public DivideResource(final CalculatorRestConfig config, final CalculatorBrainInterface brain) {
+        this.config = config;
+        this.brain = brain;
     }
-    return Integer.toString(int1/int2);
-  }
 
-  protected final String getOperationName() {
-    return "DIV";
-  }
+    @GET
+    @PerformanceMetric("divide-integers")
+    public OperationResponse divide(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
+        OperationModel operation = new OperationModel(OperationType.DIVIDE, int1, int2);
+        return new OperationResponse(brain.compute(operation).toString());
+    }
 }

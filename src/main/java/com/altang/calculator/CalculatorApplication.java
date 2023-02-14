@@ -16,11 +16,15 @@
 
 package com.altang.calculator;
 
-import com.altang.calculator.operations.AddResource;
-import com.altang.calculator.operations.AuditResource;
-import com.altang.calculator.operations.DivideResource;
-import com.altang.calculator.operations.MultiplyResource;
-import com.altang.calculator.operations.SubtractResource;
+import com.altang.calculator.client.AddResource;
+import com.altang.calculator.client.AuditResource;
+import com.altang.calculator.client.DivideResource;
+import com.altang.calculator.client.MultiplyResource;
+import com.altang.calculator.client.SubtractResource;
+import com.altang.calculator.logic.Auditor;
+import com.altang.calculator.logic.AuditorInterface;
+import com.altang.calculator.logic.CalculatorBrain;
+import com.altang.calculator.logic.CalculatorBrainInterface;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -55,12 +59,13 @@ public class CalculatorApplication extends Application<CalculatorRestConfig> {
 
     @Override
     public void setupResources(Configurable<?> config, CalculatorRestConfig appConfig) {
-        AuditResource auditResource = new AuditResource(appConfig);
-        config.register(auditResource);
-        config.register(new AddResource(auditResource, appConfig));
-        config.register(new SubtractResource(auditResource, appConfig));
-        config.register(new MultiplyResource(auditResource, appConfig));
-        config.register(new DivideResource(auditResource, appConfig));
+        AuditorInterface auditor = new Auditor();
+        CalculatorBrainInterface brain = new CalculatorBrain(auditor);
+        config.register(new AuditResource(appConfig, auditor));
+        config.register(new AddResource(appConfig, brain));
+        config.register(new SubtractResource(appConfig, brain));
+        config.register(new MultiplyResource(appConfig, brain));
+        config.register(new DivideResource(appConfig, brain));
         config.property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static/.*|.*\\.html|)");
     }
 

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.altang.calculator.operations;
+package com.altang.calculator.client;
 
 import com.altang.calculator.CalculatorRestConfig;
+import com.altang.calculator.logic.AuditorInterface;
 import com.altang.calculator.responses.AuditResponse;
 import io.confluent.rest.annotations.PerformanceMetric;
 
@@ -26,23 +27,18 @@ import javax.ws.rs.Produces;
 
 @Path("/audit")
 @Produces("application/vnd.audit.v1+json")
-public class AuditResource implements AuditResourceInterface {
+public class AuditResource {
     private final CalculatorRestConfig config;
+    private final AuditorInterface auditor;
 
-    private String log;
-
-    public AuditResource(CalculatorRestConfig config) {
+    public AuditResource(final CalculatorRestConfig config, final AuditorInterface auditor) {
         this.config = config;
-        log = "";
+        this.auditor = auditor;
     }
 
     @GET
     @PerformanceMetric("audit")
     public AuditResponse audit() {
-        return new AuditResponse(log);
-    }
-
-    public void logOperation(final String operation, final String int1, final String int2, final String result) {
-        log += String.format("%s,%s,%s,%s\n", operation, int1, int2, result);
+        return new AuditResponse(auditor.getLog());
     }
 }

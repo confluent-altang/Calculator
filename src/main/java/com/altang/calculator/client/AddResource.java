@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.altang.calculator.operations;
+package com.altang.calculator.client;
 
 import com.altang.calculator.CalculatorRestConfig;
+import com.altang.calculator.logic.CalculatorBrainInterface;
+import com.altang.calculator.models.OperationModel;
+import com.altang.calculator.models.OperationType;
 import com.altang.calculator.responses.OperationResponse;
 import io.confluent.rest.annotations.PerformanceMetric;
 
@@ -25,30 +28,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-@Path("/multiply")
-@Produces("application/vnd.multiply.v1+json")
-public class MultiplyResource extends OperationResource {
-  private static final String OPERATION_NAME = "ADD";
+@Path("/add")
+@Produces("application/vnd.add.v1+json")
+public class AddResource {
+    private final CalculatorRestConfig config;
+    private final CalculatorBrainInterface brain;
 
-  public MultiplyResource(final AuditResourceInterface auditResource, final CalculatorRestConfig config) {
-    super(auditResource, config);
-  }
-
-  @GET
-  @PerformanceMetric("multiply-integers")
-  public OperationResponse add(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
-    return runOperation(int1, int2);
-  }
-
-  protected final String calculateResult(final int int1, final int int2) {
-    long result = (long)int1 * (long)int2;
-    if (result > Integer.MAX_VALUE) {
-      return "OVERFLOW";
+    public AddResource(final CalculatorRestConfig config, final CalculatorBrainInterface brain) {
+        this.config = config;
+        this.brain = brain;
     }
-    return Integer.toString((int)result);
-  }
 
-  protected final String getOperationName() {
-    return "MUL";
-  }
+    @GET
+    @PerformanceMetric("add-integers")
+    public OperationResponse add(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
+        OperationModel operation = new OperationModel(OperationType.ADD, int1, int2);
+        return new OperationResponse(brain.compute(operation).toString());
+    }
 }
