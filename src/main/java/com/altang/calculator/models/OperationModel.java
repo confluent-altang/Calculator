@@ -31,4 +31,21 @@ public class OperationModel {
     public void setResult(final OperationResult result) {
         this.result = result;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof OperationModel)) {
+            return false;
+        }
+
+        OperationModel otherOp = (OperationModel) o;
+        return type.equals(otherOp.getType()) &&
+                int1.equals(otherOp.getInt1()) &&
+                int2.equals(otherOp.getInt2()) &&
+                result.equals(otherOp.getResult());
+    }
 }

@@ -1,5 +1,8 @@
 .SILENT:
 
+.PHONY: swagger
+	mvn clean compile
+
 .PHONY: build
 build:
 	mvn clean install

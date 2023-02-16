@@ -1,18 +1,28 @@
-package com.altang.calculator.unittests;
+package com.altang.calculator.unit;
 
-import com.altang.calculator.logic.Auditor;
+import com.altang.calculator.logic.AuditorInterface;
 import com.altang.calculator.logic.CalculatorBrain;
 import com.altang.calculator.logic.CalculatorErrorStrings;
 import com.altang.calculator.models.OperationModel;
 import com.altang.calculator.models.OperationType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CalculatorBrainTests {
+    @Mock
+    AuditorInterface auditor;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
     public void testAdd_withParams_returnsSum() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.ADD, "2", "3");
 
@@ -23,7 +33,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testAdd_withNonIntParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.ADD, "HELLO", "WORLD");
 
@@ -34,7 +43,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testAdd_withOverflowingParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.ADD, Integer.toString(Integer.MAX_VALUE), Integer.toString(Integer.MAX_VALUE));
 
@@ -45,7 +53,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testSubtract_withParams_returnsDifference() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.SUBTRACT, "4", "1");
 
@@ -56,7 +63,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testSubtract_withNonIntParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.SUBTRACT, "HELLO", "WORLD");
 
@@ -67,7 +73,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testSubtract_withOverflowingParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.SUBTRACT, Integer.toString(Integer.MIN_VALUE), Integer.toString(Integer.MAX_VALUE));
 
@@ -78,7 +83,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testMultiply_withParams_returnsProduct() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.MULTIPLY, "2", "3");
 
@@ -89,7 +93,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testMultiply_withNonIntParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.ADD, "HELLO", "WORLD");
 
@@ -100,7 +103,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testMultiply_withOverflowingParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.MULTIPLY, Integer.toString(Integer.MAX_VALUE), Integer.toString(Integer.MAX_VALUE));
 
@@ -111,7 +113,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testDivide_withParams_returnsIntegerQuotient() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.DIVIDE, "7", "3");
 
@@ -122,7 +123,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testDivide_withNonIntParams_returnsError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.DIVIDE, "HELLO", "WORLD");
 
@@ -133,7 +133,6 @@ public class CalculatorBrainTests {
 
     @Test
     public void testDivide_withZeroDivisor_returnsDivideByZeroError() {
-        Auditor auditor = new Auditor();
         CalculatorBrain brain = new CalculatorBrain(auditor);
         OperationModel model = new OperationModel(OperationType.DIVIDE, "5", "0");
 

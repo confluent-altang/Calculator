@@ -25,6 +25,10 @@ import com.altang.calculator.logic.Auditor;
 import com.altang.calculator.logic.AuditorInterface;
 import com.altang.calculator.logic.CalculatorBrain;
 import com.altang.calculator.logic.CalculatorBrainInterface;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -40,16 +44,14 @@ import javax.ws.rs.core.Configurable;
 import io.confluent.rest.Application;
 import io.confluent.rest.RestConfigException;
 
-/**
- * An application represents the configured, running, REST service. You have to provide two things:
- * a configuration (to the constructor or by overriding configure()) and a set of resources to
- * for the REST API (added in setupResources()). After defining these, simply call
- * Application.createServer() to get a Jetty server, then call start() to start processing requests
- *
- * <p>This application uses a simple configuration that allows you to override the message that is
- * echoed back in the response, and the driver program optionally loads this setting from a command
- * line argument.
- */
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Calculator",
+                version = "1.0",
+                description = "A basic calculator that does operations on integers.",
+                contact = @Contact(url = "https://github.com/confluent-altang/Calculator", email = "altang@confluent.io")
+        )
+)
 public class CalculatorApplication extends Application<CalculatorRestConfig> {
     private static final Logger log = LoggerFactory.getLogger(CalculatorApplication.class);
 

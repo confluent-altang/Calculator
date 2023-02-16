@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -12,8 +11,7 @@
 
     <groupId>com.altang.calculator</groupId>
     <artifactId>calculator</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
+    <version>1.0</version>
     <name>calculator</name>
     <url>https://github.com/confluent-altang/Calculator</url>
 
@@ -56,12 +54,12 @@
                 <version>2.2.8</version>
                 <configuration>
                     <outputFileName>openapi</outputFileName>
-                    <outputPath>${project.build.directory}/generatedtest</outputPath>
+                    <outputPath>${project.build.directory}/generated</outputPath>
                     <outputFormat>JSONANDYAML</outputFormat>
                     <resourcePackages>
-                        <package>test.petstore</package>
+                        <package>com.altang.calculator</package>
                     </resourcePackages>
-                    <prettyPrint>TRUE</prettyPrint>
+                    <prettyPrint>true</prettyPrint>
                 </configuration>
                 <executions>
                     <execution>

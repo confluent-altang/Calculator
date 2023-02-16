@@ -28,4 +28,27 @@ public class OperationResult {
             return exception.getMessage();
         }
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof OperationResult)) {
+            return false;
+        }
+
+        OperationResult otherResult = (OperationResult) o;
+        if (result == otherResult.getResult()) {
+            Exception otherException = otherResult.getException();
+            if (exception == null && otherException == null) {
+                return true;
+            } else if (exception != null && otherException != null) {
+                return exception.getClass().equals(otherException.getClass()) && exception.getMessage().equals(otherException.getMessage());
+            }
+        }
+
+        return false;
+    }
 }
