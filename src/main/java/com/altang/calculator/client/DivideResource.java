@@ -19,9 +19,7 @@ package com.altang.calculator.client;
 import com.altang.calculator.CalculatorRestConfig;
 import com.altang.calculator.logic.CalculatorBrainInterface;
 import com.altang.calculator.models.OperationModel;
-import com.altang.calculator.models.OperationResult;
 import com.altang.calculator.models.OperationType;
-import com.altang.calculator.responses.OperationResponse;
 import io.confluent.rest.annotations.PerformanceMetric;
 
 import javax.ws.rs.GET;
@@ -42,8 +40,8 @@ public class DivideResource {
 
     @GET
     @PerformanceMetric("divide-integers")
-    public OperationResponse divide(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
+    public String divide(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
         OperationModel operation = new OperationModel(OperationType.DIVIDE, int1, int2);
-        return new OperationResponse(brain.compute(operation).toString());
+        return brain.compute(operation).toString();
     }
 }

@@ -18,7 +18,6 @@ package com.altang.calculator.client;
 
 import com.altang.calculator.CalculatorRestConfig;
 import com.altang.calculator.logic.AuditorInterface;
-import com.altang.calculator.responses.AuditResponse;
 import io.confluent.rest.annotations.PerformanceMetric;
 
 import javax.ws.rs.GET;
@@ -38,7 +37,7 @@ public class AuditResource {
 
     @GET
     @PerformanceMetric("audit")
-    public AuditResponse audit() {
-        return new AuditResponse(auditor.getLog());
+    public String audit() {
+        return auditor.getLog();
     }
 }

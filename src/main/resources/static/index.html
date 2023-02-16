@@ -159,7 +159,7 @@ async function submitOperation(endpoint) {
   return new Promise(function(resolve, reject) {
    xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
-        resolve(JSON.parse(xhr.responseText)["message"]);
+        resolve(xhr.responseText);
       }
     }
     const display = document.getElementById('display');

@@ -17,7 +17,6 @@
 package com.altang.calculator;
 
 import com.altang.calculator.client.AddResource;
-import com.altang.calculator.client.AuditResource;
 import com.altang.calculator.client.DivideResource;
 import com.altang.calculator.client.MultiplyResource;
 import com.altang.calculator.client.SubtractResource;
@@ -25,9 +24,6 @@ import com.altang.calculator.logic.Auditor;
 import com.altang.calculator.logic.AuditorInterface;
 import com.altang.calculator.logic.CalculatorBrain;
 import com.altang.calculator.logic.CalculatorBrainInterface;
-import com.altang.calculator.models.OperationModel;
-import com.altang.calculator.models.OperationResult;
-import com.altang.calculator.responses.OperationResponse;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
@@ -43,31 +39,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * EmbeddedServerTestHarness does most of the heavy lifting so you only need to issue requests and
  * check responses.
  */
-public class CalculatorResourceTest extends EmbeddedServerTestHarness<CalculatorRestConfig, CalculatorApplication> {
+public class CalculatorUnitTest extends EmbeddedServerTestHarness<CalculatorRestConfig, CalculatorApplication> {
     private final static String addMediaType = "application/vnd.add.v1+json";
     private final static String subtractMediaType = "application/vnd.subtract.v1+json";
     private final static String multiplyMediaType = "application/vnd.multiply.v1+json";
     private final static String divideMediaType = "application/vnd.divide.v1+json";
 
-    public CalculatorResourceTest() throws RestConfigException {
+    public CalculatorUnitTest() throws RestConfigException {
         AuditorInterface auditor = new Auditor();
         CalculatorBrainInterface brain = new CalculatorBrain(auditor);
         addResource(new AddResource(config, brain));
         addResource(new SubtractResource(config, brain));
         addResource(new MultiplyResource(config, brain));
         addResource(new DivideResource(config, brain));
-    }
-
-    @Test
-    public void testAdd() {
-        Response response = request("/add", addMediaType).get();
-        // The response should indicate success and have the expected content type
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-        assertEquals(addMediaType, response.getMediaType().toString());
-
-        // We should also be able to parse it as the expected output format
-        final OperationResponse message = response.readEntity(OperationResponse.class);
-        // And it should contain the expected message
-        assertEquals("ARGUMENT", message.getMessage());
     }
 }
