@@ -42,6 +42,7 @@ public class MultiplyResource {
     @PerformanceMetric("multiply-integers")
     public String multiply(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
         OperationModel operation = new OperationModel(OperationType.MULTIPLY, int1, int2);
-        return brain.compute(operation).toString();
+        brain.compute(operation);
+        return operation.getResult().toString();
     }
 }

@@ -13,7 +13,7 @@ public class CalculatorBrain implements CalculatorBrainInterface {
         this.auditor = auditor;
     }
 
-    public OperationResult compute(final OperationModel operationModel) {
+    public void compute(final OperationModel operationModel) {
         List<Integer> arguments;
         int resultValue = 0;
         OperationResult result = null;
@@ -35,12 +35,12 @@ public class CalculatorBrain implements CalculatorBrainInterface {
             }
             result = new OperationResult(resultValue);
         } catch (NumberFormatException e) {
-            result = new OperationResult(new IllegalArgumentException("ARGUMENT"));
+            result = new OperationResult(new IllegalArgumentException(CalculatorErrorStrings.ARGUMENT));
         } catch (ArithmeticException e) {
             result = new OperationResult(e);
         }
-        auditor.logOperation(new OperationModel(operationModel, result));
-        return result;
+        operationModel.setResult(result);
+        auditor.logOperation(operationModel);
     }
 
     private List<Integer> deserializeArguments(final OperationModel operationModel) throws NumberFormatException {
@@ -83,7 +83,7 @@ public class CalculatorBrain implements CalculatorBrainInterface {
         for (int i = 1; i < arguments.size(); i++) {
             int argument = arguments.get(i);
             if (argument == 0) {
-                throw new ArithmeticException("DIV BY 0");
+                throw new ArithmeticException(CalculatorErrorStrings.DIVIDE_BY_O);
             }
             result /= argument;
         }
@@ -93,7 +93,7 @@ public class CalculatorBrain implements CalculatorBrainInterface {
 
     private void checkIntegerBounds(final long value) throws ArithmeticException {
         if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) {
-            throw new ArithmeticException("OVERFLOW");
+            throw new ArithmeticException(CalculatorErrorStrings.OVERFLOW);
         }
     }
 }

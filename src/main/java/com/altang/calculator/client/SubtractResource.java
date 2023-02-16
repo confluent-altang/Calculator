@@ -42,6 +42,7 @@ public class SubtractResource {
     @PerformanceMetric("add-integers")
     public String subtract(@QueryParam("int1") final String int1, @QueryParam("int2") final String int2) {
         OperationModel operation = new OperationModel(OperationType.SUBTRACT, int1, int2);
-        return brain.compute(operation).toString();
+        brain.compute(operation);
+        return operation.getResult().toString();
     }
 }

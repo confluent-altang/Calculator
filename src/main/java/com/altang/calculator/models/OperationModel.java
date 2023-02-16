@@ -12,13 +12,6 @@ public class OperationModel {
         this.int2 = int2;
     }
 
-    public OperationModel(final OperationModel originalOperation, final OperationResult result) {
-        this.type = originalOperation.getType();
-        this.int1 = originalOperation.getInt1();
-        this.int2 = originalOperation.getInt2();
-        this.result = result;
-    }
-
     public OperationType getType() {
         return type;
     }
@@ -33,5 +26,9 @@ public class OperationModel {
 
     public OperationResult getResult() {
         return result;
+    }
+
+    public void setResult(final OperationResult result) {
+        this.result = result;
     }
 }
